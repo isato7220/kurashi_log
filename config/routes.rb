@@ -3,10 +3,7 @@ Rails.application.routes.draw do
   get 'users/show'
   get 'categories/index'
   get 'categories/show'
-  get 'posts/new'
-  get 'posts/index'
-  get 'posts/show'
-  get 'posts/edit'
+  resources :posts
   get 'homes/top'
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
