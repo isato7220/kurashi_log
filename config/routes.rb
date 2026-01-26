@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'users/edit'
-  get 'users/show'
+  get "mypage", to: "users#show"
   get 'categories/index'
   get 'categories/show'
   resources :posts

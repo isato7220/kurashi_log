@@ -1,0 +1,26 @@
+.login-bg {
+  background-image: url('login_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.login-page {
+  min-height: 100vh;
+  background: url("/assets/login-bg.png") center / cover no-repeat;
+  padding: 20px;
+}
+
+.login-card {
+  max-width: 420px;
+  width: 100%;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 1.5rem;
+}
+
+.btn-success {
+  background-color: #7fae9b;
+  border-color: #7fae9b;
+}

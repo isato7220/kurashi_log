@@ -1,2 +1,70 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+<div class="container py-5">
+
+  <!-- ヘッダー -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold mb-2">
+      今日の暮らしを、ひとつ記録してみましょう 🌿
+    </h2>
+    <p class="text-muted small">
+      あとから振り返れる、あなたの生活ノートです
+    </p>
+  </div>
+
+  <!-- フォームカード -->
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <%= form_with model: @post, local: true do |f| %>
+
+            <!-- タイトル -->
+            <div class="mb-4">
+              <%= f.label :title, "何に使いましたか？", class: "form-label" %>
+              <%= f.text_field :title,
+                    class: "form-control form-control-lg",
+                    placeholder: "例：スーパーで食材まとめ買い" %>
+            </div>
+
+            <!-- 金額 -->
+            <div class="mb-4">
+              <%= f.label :amount, "いくら？", class: "form-label" %>
+              <%= f.number_field :amount,
+                    class: "form-control",
+                    placeholder: "1200" %>
+            </div>
+
+            <!-- カテゴリ -->
+            <div class="mb-4">
+              <%= f.label :category, "カテゴリ", class: "form-label" %>
+              <%= f.select :category,
+                    Post.categories.keys,
+                    {},
+                    class: "form-select" %>
+            </div>
+
+            <!-- メモ -->
+            <div class="mb-5">
+              <%= f.label :memo, "ひとことメモ（任意）", class: "form-label" %>
+              <%= f.text_area :memo,
+                    rows: 3,
+                    class: "form-control",
+                    placeholder: "節約できた気がする" %>
+            </div>
+
+            <!-- ボタン -->
+            <div class="d-grid">
+              <%= f.submit "記録する",
+                    class: "btn btn-success btn-lg rounded-3" %>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

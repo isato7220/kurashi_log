@@ -1,2 +1,114 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="container my-5">
+
+  <!-- ヘッダー -->
+  <section class="text-center mb-5">
+    <h2 class="fw-bold mb-2">
+      こんにちは、<%= current_user.name %> さん
+    </h2>
+    <p class="text-muted mb-0">
+      今日も暮らしを少し整理していきましょう 🌱
+    </p>
+  </section>
+
+  <div class="row g-4 align-items-start">
+
+    <!-- 左：ユーザー情報 -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">ユーザー情報</h5>
+
+          <p class="mb-1">
+            <strong>名前</strong><br>
+            <%= current_user.name %>
+          </p>
+
+          <p class="mb-3">
+            <strong>メール</strong><br>
+            <%= current_user.email %>
+          </p>
+
+          <%= link_to "プロフィール編集",
+              edit_user_registration_path,
+              class: "btn btn-success w-100" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：メイン -->
+    <div class="col-md-8">
+
+      <!-- 今月の記録（カレンダー） -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">
+            今月の記録
+            <span class="text-muted fs-6">
+              （<%= Time.current.strftime("%Y年%m月") %>）
+            </span>
+          </h5>
+
+          <!-- ミニカレンダー（静的想定） -->
+          <table class="table table-sm text-center align-middle mb-0">
+            <thead class="text-muted small">
+              <tr>
+                <th>月</th><th>火</th><th>水</th>
+                <th>木</th><th>金</th><th>土</th><th>日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (1..4).each do %>
+                <tr>
+                  <% 7.times do %>
+                    <td>
+                      <span class="calendar-dot"></span>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <p class="text-muted small mt-2 mb-0">
+            ● がある日は支出を記録しています
+          </p>
+        </div>
+      </div>
+
+      <!-- 投稿一覧 -->
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">あなたの投稿</h5>
+            <%= link_to "＋ 新規投稿",
+                new_post_path,
+                class: "btn btn-success btn-sm" %>
+          </div>
+
+          <% if @posts.any? %>
+            <ul class="list-group list-group-flush">
+              <% @posts.each do |post| %>
+                <li class="list-group-item px-0 py-3">
+                  <p class="mb-1 fw-semibold">
+                    <%= post.category %> / <%= number_to_currency(post.amount, unit: "¥") %>
+                  </p>
+                  <p class="mb-0 text-muted small">
+                    <%= post.title %>
+                  </p>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted mb-0">
+              まだ投稿がありません ✏️
+            </p>
+          <% end %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

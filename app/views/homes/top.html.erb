@@ -15,9 +15,10 @@
           <div class="d-flex gap-3">
             <% if user_signed_in? %>
               <%= link_to "マイページへ", mypage_path, class: "btn btn-primary px-4" %>
-              <%= link_to "新規投稿", new_post_path, class: "btn btn-outline-secondary px-4" %>
+              <%= link_to "新規投稿", new_post_path, class: "btn btn-outline-secondary px-4 ml-2" %>
             <% else %>
               <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-secondary px-4" %>
+              <%= link_to "ログイン", user_session_path, class: "btn btn-outline-primary px-4 ml-2" %>
             <% end %>
           </div>
         </div>

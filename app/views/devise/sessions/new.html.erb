@@ -1,0 +1,64 @@
+<div class="login-page d-flex align-items-center justify-content-center">
+
+  <div class="login-card card shadow-lg border-0 p-4 p-md-5">
+
+    <!-- タイトル -->
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-2">こんにちは</h2>
+      <p class="text-muted small mb-0">
+        暮らしを整えていきましょう 🌿
+      </p>
+    </div>
+
+    <%= form_for(resource,
+          as: resource_name,
+          url: session_path(resource_name)) do |f| %>
+
+      <!-- メール -->
+      <div class="mb-4">
+        <%= f.label :email, "メールアドレス", class: "form-label small text-muted" %>
+        <%= f.email_field :email,
+              autofocus: true,
+              class: "form-control form-control-lg rounded-3" %>
+      </div>
+
+      <!-- パスワード -->
+      <div class="mb-3">
+        <%= f.label :password, "パスワード", class: "form-label small text-muted" %>
+        <%= f.password_field :password,
+              class: "form-control form-control-lg rounded-3" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="form-check mb-4">
+          <%= f.check_box :remember_me, class: "form-check-input" %>
+          <%= f.label :remember_me, "ログイン状態を保持",
+                class: "form-check-label small text-muted" %>
+        </div>
+      <% end %>
+
+      <!-- ログイン -->
+      <div class="d-grid mb-4">
+        <%= f.submit "ログイン",
+              class: "btn btn-success btn-lg rounded-3" %>
+      </div>
+
+    <% end %>
+
+    <!-- 下部リンク（最小限） -->
+    <div class="text-center small text-muted">
+
+      <%= link_to "パスワードを忘れた方",
+            new_password_path(resource_name),
+            class: "text-decoration-none me-3" %>
+
+      |
+
+      <%= link_to "新規登録",
+            new_registration_path(resource_name),
+            class: "text-decoration-none fw-semibold ms-3" %>
+
+    </div>
+
+  </div>
+</div>
