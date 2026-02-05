@@ -5,3 +5,20 @@ ja:
         unit: "¥"
         precision: 0
         format: "%u%n"
+
+ja:
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      long: "%Y年%m月%d日 %H:%M"
+      short: "%m/%d"
+
+ja:
+  activerecord:
+    attributes:
+      post:
+        categories:
+          food: 食費
+          rent: 家賃
+          utility: 光熱費
+          hobby: 娯楽

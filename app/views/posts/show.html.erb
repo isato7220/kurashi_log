@@ -1,2 +1,74 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="container py-5">
+
+  <!-- 戻る -->
+  <div class="mb-4">
+    <%= link_to "← 一覧に戻る", posts_path,
+          class: "text-decoration-none small text-muted" %>
+  </div>
+
+  <!-- メインカード -->
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+
+      <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+          <!-- タイトル -->
+          <div class="mb-4">
+
+            <p class="text-muted small mb-2">
+              <%= l @post.created_at, format: :long %>
+            </p>
+
+            <!-- カテゴリバッジ -->
+            <span class="badge bg-success-subtle text-success mb-2">
+              <%= @post.category_i18n || @post.category %>
+            </span>
+
+            <h3 class="fw-bold mb-0">
+              <%= @post.title %>
+            </h3>
+          </div>
+
+          <hr>
+
+          <!-- 金額 -->
+          <div class="mb-4">
+            <p class="text-muted small mb-1">金額</p>
+            <p class="fs-4 fw-semibold mb-0">
+              <%= number_to_currency(@post.amount, unit: "¥") %>
+            </p>
+          </div>
+
+          <!-- メモ -->
+          <% if @post.memo.present? %>
+            <div class="mb-4">
+              <p class="text-muted small mb-1">メモ</p>
+              <div class="p-3 bg-light rounded-3">
+                <%= simple_format(@post.memo) %>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- ボタン群 -->
+          <div class="d-flex gap-3 mt-5">
+
+            <%= link_to "編集する",
+                  edit_post_path(@post),
+                  class: "btn btn-success flex-fill" %>
+
+            <%= link_to "削除する",
+                  post_path(@post),
+                  method: :delete,
+                  data: { confirm: "削除しますか？" },
+                  class: "btn btn-outline-secondary flex-fill" %>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
