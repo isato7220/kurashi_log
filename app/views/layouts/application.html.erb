@@ -10,7 +10,69 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+
+
+
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
+  <div class="container">
+
+    <%= link_to "暮らしの棚卸し", root_path, class: "navbar-brand fw-bold" %>
+
+    <!-- 三本線 -->
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- ここ重要 -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+
+      <ul class="navbar-nav ms-auto">
+
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "マイページ", mypage_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "投稿一覧", posts_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_user_session_path, class: "nav-link", method: :delete %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+
+      </ul>
+
+    </div>
+        <li class="nav-item me-3">
+  <%= form_with url: posts_path,
+        method: :get,
+        local: true,
+        class: "d-flex" do |f| %>
+
+    <%= f.text_field :q,
+          value: params[:q],
+          placeholder: "タイトル・メモ・カテゴリ検索",
+          class: "form-control form-control-sm rounded-pill",
+          style: "width: 220px;" %>
+      <% end %>
+    </li>
+
+  </div>
+</nav>
+
+
+  <!-- ===== ページ本体 ===== -->
+  <%= yield %>
+
+</body>
+
 </html>

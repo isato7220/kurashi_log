@@ -22,9 +22,10 @@
             </p>
 
             <!-- カテゴリバッジ -->
-            <span class="badge bg-success-subtle text-success mb-2">
-              <%= @post.category_i18n || @post.category %>
-            </span>
+<span class="badge bg-success-subtle text-success mb-2">
+  <%= @post.category&.name || "未分類" %>
+</span>
+
 
             <h3 class="fw-bold mb-0">
               <%= @post.title %>

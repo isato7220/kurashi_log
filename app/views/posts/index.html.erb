@@ -1,2 +1,83 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="container py-5">
+
+  <div class="mx-auto" style="max-width: 720px;">
+
+    <!-- 戻る -->
+    <div class="mb-3">
+      <%= link_to "← ホームへ戻る", root_path,
+            class: "text-decoration-none small text-muted" %>
+    </div>
+
+    <!-- ヘッダー -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold mb-1">みんなの暮らし</h2>
+        <p class="text-muted small mb-0">
+          日々の生活記録を振り返ってみましょう 🌿
+        </p>
+      </div>
+
+      <%= link_to "＋ 新規投稿",
+            new_post_path,
+            class: "btn btn-success rounded-3 px-4" %>
+    </div>
+
+    <!-- 投稿一覧（ここそのまま） -->
+
+
+
+<!-- 投稿一覧 -->
+<% @posts.each do |post| %>
+
+  <%= link_to post_path(post),
+        class: "text-decoration-none text-dark" do %>
+
+    <div class="card mb-3 border-0 shadow-sm post-card">
+
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between">
+
+          <!-- 左側 -->
+          <div class="flex-grow-1">
+
+            <!-- ⭐ カテゴリ（文字しっかり表示） -->
+            <span class="badge category-badge mb-2">
+              <%= post.category&.name || "未分類" %>
+            </span>
+
+            <!-- タイトル -->
+            <p class="fw-semibold mb-1">
+              <%= post.title %>
+            </p>
+
+            <!-- ⭐ メモ（追加） -->
+            <% if post.memo.present? %>
+              <p class="text-muted small mb-1 text-truncate">
+                <%= post.memo %>
+              </p>
+            <% end %>
+
+            <!-- 金額 -->
+            <small class="text-muted">
+              <%= number_to_currency(post.amount, unit: "¥") %>
+            </small>
+
+          </div>
+
+          <!-- 右側 -->
+          <div class="text-end small text-muted ms-3">
+            <div>by <%= post.user.name %></div>
+            <div><%= l post.created_at, format: :short %></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  <% end %>
+
+<% end %>
+  </div>
+</div>

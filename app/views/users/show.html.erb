@@ -91,7 +91,7 @@
               <% @posts.each do |post| %>
                 <li class="list-group-item px-0 py-3">
                   <p class="mb-1 fw-semibold">
-                    <%= post.category %> / <%= number_to_currency(post.amount, unit: "¥") %>
+                    <%= post.category.name %> / <%= number_to_currency(post.amount, unit: "¥") %>
                   </p>
                   <p class="mb-0 text-muted small">
                     <%= post.title %>

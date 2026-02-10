@@ -6,18 +6,22 @@ ja:
         precision: 0
         format: "%u%n"
 
-ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
-      long: "%Y年%m月%d日 %H:%M"
       short: "%m/%d"
+      long: "%Y年%m月%d日 %H:%M"
 
-ja:
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日"
+
   activerecord:
     attributes:
       post:
-        categories:
+        category:
           food: 食費
           rent: 家賃
           utility: 光熱費
