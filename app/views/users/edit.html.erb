@@ -1,2 +1,58 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class="container py-5 mx-auto">
+
+  <!-- 戻る -->
+  <div class="mb-4">
+    <%= link_to "← マイページに戻る",
+          mypage_path,
+          class: "text-decoration-none small text-muted" %>
+  </div>
+
+  <!-- ヘッダー -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold mb-2">アカウント設定</h2>
+    <p class="text-muted small mb-0">
+      名前やメールアドレスを変更できます
+    </p>
+  </div>
+
+  <!-- フォーム -->
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-11">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+<%= form_with model: @user,
+      url: profile_path,
+      method: :patch,
+      local: true do |f| %>
+
+
+            <!-- 名前 -->
+            <div class="mb-4">
+              <%= f.label :name, "名前", class: "form-label" %>
+              <%= f.text_field :name,
+                    class: "form-control form-control-lg" %>
+            </div>
+
+            <!-- メール -->
+            <div class="mb-5">
+              <%= f.label :email, "メールアドレス", class: "form-label" %>
+              <%= f.email_field :email,
+                    class: "form-control" %>
+            </div>
+
+            <!-- 更新 -->
+            <div class="d-grid">
+              <%= f.submit "更新する",
+                    class: "btn btn-success btn-lg rounded-3" %>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

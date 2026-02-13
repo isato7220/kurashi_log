@@ -1,4 +1,4 @@
-<div class="container py-5">
+<div class="container py-5 mx-auto">
 
   <!-- 戻る -->
   <div class="mb-4">
@@ -8,7 +8,7 @@
 
   <!-- メインカード -->
   <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-7">
+    <div class="col-md-12 col-lg-11">
 
       <div class="card shadow-sm border-0 rounded-4">
 
@@ -69,6 +69,57 @@
 
         </div>
       </div>
+<!-- ===================== -->
+<!-- 💬 コメントエリア追加 -->
+<!-- ===================== -->
+
+<div class="row justify-content-center mt-5">
+  <div class="col-md-12 col-lg-11">
+
+    <div class="card shadow-sm border-0 rounded-4">
+      <div class="card-body p-4">
+
+        <h5 class="fw-bold mb-3">💬 コメント</h5>
+
+        <!-- コメント一覧 -->
+        <% @post.comments.order(created_at: :desc).each do |comment| %>
+          <div class="bg-light rounded-3 p-3 mb-2 small">
+
+            <div class="text-muted mb-1">
+              <strong><%= comment.user.name %></strong>
+              ・ <%= l comment.created_at, format: :short %>
+            </div>
+
+            <div>
+              <%= simple_format(comment.body) %>
+            </div>
+
+          </div>
+        <% end %>
+
+
+        <!-- フォーム -->
+        <% if user_signed_in? %>
+          <div class="mt-3">
+            <%= form_with model: [@post, Comment.new], local: true do |f| %>
+
+              <%= f.text_area :body,
+                    rows: 2,
+                    placeholder: "ひとことコメント...",
+                    class: "form-control mb-2 rounded-3" %>
+
+              <%= f.submit "送信",
+                    class: "btn btn-success btn-sm px-4" %>
+
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
+  </div>
+</div>
 
     </div>
   </div>

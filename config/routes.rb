@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  get 'users/edit'
-  get "mypage", to: "users#show"
-  get 'categories/index'
-  get 'categories/show'
-  resources :posts
-  get 'homes/top'
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   root to: "homes#top"
+
+  get "mypage", to: "users#show"
+get  "profile/edit", to: "users#edit",   as: :edit_profile
+patch "profile",      to: "users#update", as: :profile
+
+
+  resources :posts do
+    resources :comments, only: [:create, :destroy]
+  end
+
+  resources :categories, only: [:index, :show]
 end
