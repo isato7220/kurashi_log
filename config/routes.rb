@@ -12,5 +12,6 @@ patch "profile",      to: "users#update", as: :profile
     resources :comments, only: [:create, :destroy]
   end
 
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
+
 end

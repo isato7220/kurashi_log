@@ -19,15 +19,6 @@
   <div class="container">
 
     <%= link_to "暮らしの棚卸し", root_path, class: "navbar-brand fw-bold" %>
-
-    <!-- 三本線 -->
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
     <!-- ここ重要 -->
     <div class="collapse navbar-collapse" id="navbarMenu">
 
@@ -40,6 +31,13 @@
           <li class="nav-item">
             <%= link_to "投稿一覧", posts_path, class: "nav-link" %>
           </li>
+                   <% if current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to "カテゴリ管理",
+                    categories_path,
+                    class: "nav-link text-danger" %>
+            </li>
+            <% end %>
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_user_session_path, class: "nav-link", method: :delete %>
           </li>

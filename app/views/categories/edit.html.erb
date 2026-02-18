@@ -1,0 +1,7 @@
+<div class="container py-5" style="max-width: 600px;">
+  <h2 class="fw-bold mb-4">
+    <%= @category.new_record? ? "カテゴリ追加" : "カテゴリ編集" %>
+  </h2>
+
+  <%= render "form" %>
+</div>
