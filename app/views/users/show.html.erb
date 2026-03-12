@@ -11,9 +11,18 @@
   </section>
 
   <div class="row g-4 align-items-start">
+    
 
     <!-- 左：ユーザー情報 -->
     <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+  <div class="card-body text-center">
+    <p class="text-muted mb-1">今月の支出</p>
+    <h3 class="fw-bold">
+      <%= number_to_currency(@monthly_total, unit: "¥", precision: 0) %>
+    </h3>
+  </div>
+</div>
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body">
           <h5 class="fw-bold mb-3">ユーザー情報</h5>
@@ -63,6 +72,25 @@
           </div>
         <% end %>
       <% end %>  
+      <div class="card border-0 shadow-sm rounded-4 mt-4">
+  <div class="card-body">
+    <h5 class="fw-bold mb-3">カテゴリ別支出</h5>
+
+    <% if @category_totals.any? %>
+      <ul class="list-group list-group-flush">
+        <% @category_totals.each do |category, total| %>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><%= category %></span>
+            <span><%= number_to_currency(total, unit: "¥", precision: 0) %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-muted">まだデータがありません</p>
+    <% end %>
+
+  </div>
+</div>
 
       <!-- 投稿一覧 -->
       <div class="card border-0 shadow-sm rounded-4">
