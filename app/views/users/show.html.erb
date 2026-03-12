@@ -38,42 +38,31 @@
     <!-- 右：メイン -->
     <div class="col-md-8">
 
-      <!-- 今月の記録（カレンダー） -->
-      <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-body">
-          <h5 class="fw-bold mb-3">
-            今月の記録
-            <span class="text-muted fs-6">
-              （<%= Time.current.strftime("%Y年%m月") %>）
-            </span>
-          </h5>
-
-          <!-- ミニカレンダー（静的想定） -->
-          <table class="table table-sm text-center align-middle mb-0">
-            <thead class="text-muted small">
-              <tr>
-                <th>月</th><th>火</th><th>水</th>
-                <th>木</th><th>金</th><th>土</th><th>日</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% (1..4).each do %>
-                <tr>
-                  <% 7.times do %>
-                    <td>
-                      <span class="calendar-dot"></span>
-                    </td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-
-          <p class="text-muted small mt-2 mb-0">
-            ● がある日は支出を記録しています
-          </p>
+      <%= month_calendar events: @calendar_posts, attribute: :posted_on do |date, posts| %>
+        <div class="small fw-semibold <%= 'text-success' if date == Date.today %>">
+          <%= link_to date.day,
+              url_for(date: date),
+              class: "text-decoration-none text-reset" %>
         </div>
-      </div>
+
+        <% if posts.any? %>
+          <div class="mt-1">
+            <% posts.each do |post| %>
+              <div class="text-muted small">
+                <%= link_to post_path(post), class: "text-decoration-none text-reset" do %>
+                <span class="badge bg-success-subtle text-success">
+                  <%= post.category.name %>
+                </span>
+                ¥<%= number_with_delimiter(post.amount) %>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="small fw-semibold text-success mt-1">
+              合計 ¥<%= number_with_delimiter(posts.sum(&:amount)) %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>  
 
       <!-- 投稿一覧 -->
       <div class="card border-0 shadow-sm rounded-4">
@@ -88,16 +77,18 @@
 
           <% if @posts.any? %>
             <ul class="list-group list-group-flush">
-              <% @posts.each do |post| %>
-                <li class="list-group-item px-0 py-3">
-                  <p class="mb-1 fw-semibold">
-                    <%= post.category.name %> / <%= number_to_currency(post.amount, unit: "¥") %>
-                  </p>
-                  <p class="mb-0 text-muted small">
-                    <%= post.title %>
-                  </p>
-                </li>
-              <% end %>
+<% @posts.each do |post| %>
+  <li class="list-group-item px-0 py-3">
+    <%= link_to post_path(post), class: "text-decoration-none text-reset" do %>
+      <p class="mb-1 fw-semibold">
+        <%= post.category.name %> / <%= number_to_currency(post.amount, unit: "¥") %>
+      </p>
+      <p class="mb-0 text-muted small">
+        <%= post.title %>
+      </p>
+    <% end %>
+  </li>
+<% end %>
             </ul>
           <% else %>
             <p class="text-muted mb-0">
@@ -111,4 +102,3 @@
     </div>
   </div>
 </div>
-

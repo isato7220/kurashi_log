@@ -27,7 +27,7 @@ end
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      redirect_to @post, notice: "投稿を作成しました 🌿"
+      redirect_to @post, notice: "投稿を作成しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -68,7 +68,7 @@ end
       :body,
       :amount,
       :posted_on,
-      :category_id,   # ← categoriesテーブル方式なら追加必須
+      :category_id,
       :memo
 
     )
