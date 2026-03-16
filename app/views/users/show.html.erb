@@ -1,6 +1,5 @@
 <div class="container my-5">
 
-  <!-- ヘッダー -->
   <section class="text-center mb-5">
     <h2 class="fw-bold mb-2">
       こんにちは、<%= current_user.name %> さん
@@ -11,47 +10,42 @@
   </section>
 
   <div class="row g-4 align-items-start">
-    
 
-    <!-- 左：ユーザー情報 -->
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
-  <div class="card-body text-center">
-    <p class="text-muted mb-1">今月の支出</p>
-    <h3 class="fw-bold">
-      <%= number_to_currency(@monthly_total, unit: "¥", precision: 0) %>
-    </h3>
-  </div>
-</div>
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body text-center">
+          <p class="text-muted mb-1">今月の支出</p>
+          <h3 class="fw-bold">
+            <%= number_to_currency(@monthly_total, unit: "¥", precision: 0) %>
+          </h3>
+        </div>
+      </div>
+
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body">
           <h5 class="fw-bold mb-3">ユーザー情報</h5>
-
           <p class="mb-1">
             <strong>名前</strong><br>
             <%= current_user.name %>
           </p>
-
           <p class="mb-3">
             <strong>メール</strong><br>
             <%= current_user.email %>
           </p>
-
           <%= link_to "プロフィール編集",
-              edit_profile_path,
-              class: "btn btn-success w-100" %>
+                edit_profile_path,
+                class: "btn btn-success w-100" %>
         </div>
       </div>
     </div>
 
-    <!-- 右：メイン -->
     <div class="col-md-8">
 
       <%= month_calendar events: @calendar_posts, attribute: :posted_on do |date, posts| %>
         <div class="small fw-semibold <%= 'text-success' if date == Date.today %>">
           <%= link_to date.day,
-              url_for(date: date),
-              class: "text-decoration-none text-reset" %>
+                url_for(date: date),
+                class: "text-decoration-none text-reset" %>
         </div>
 
         <% if posts.any? %>
@@ -59,10 +53,10 @@
             <% posts.each do |post| %>
               <div class="text-muted small">
                 <%= link_to post_path(post), class: "text-decoration-none text-reset" do %>
-                <span class="badge bg-success-subtle text-success">
-                  <%= post.category.name %>
-                </span>
-                ¥<%= number_with_delimiter(post.amount) %>
+                  <span class="badge bg-success-subtle text-success">
+                    <%= post.category.name %>
+                  </span>
+                  ¥<%= number_with_delimiter(post.amount) %>
                 <% end %>
               </div>
             <% end %>
@@ -71,57 +65,54 @@
             </div>
           </div>
         <% end %>
-      <% end %>  
+      <% end %>
+
       <div class="card border-0 shadow-sm rounded-4 mt-4">
-  <div class="card-body">
-    <h5 class="fw-bold mb-3">カテゴリ別支出</h5>
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">カテゴリ別支出</h5>
 
-    <% if @category_totals.any? %>
-      <ul class="list-group list-group-flush">
-        <% @category_totals.each do |category, total| %>
-          <li class="list-group-item d-flex justify-content-between">
-            <span><%= category %></span>
-            <span><%= number_to_currency(total, unit: "¥", precision: 0) %></span>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="text-muted">まだデータがありません</p>
-    <% end %>
+          <% if @category_totals.any? %>
+            <ul class="list-group list-group-flush">
+              <% @category_totals.each do |category, total| %>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span><%= category %></span>
+                  <span><%= number_to_currency(total, unit: "¥", precision: 0) %></span>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted">まだデータがありません</p>
+          <% end %>
+        </div>
+      </div>
 
-  </div>
-</div>
-
-      <!-- 投稿一覧 -->
-      <div class="card border-0 shadow-sm rounded-4">
+      <div class="card border-0 shadow-sm rounded-4 mt-4">
         <div class="card-body">
 
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="fw-bold mb-0">あなたの投稿</h5>
             <%= link_to "＋ 新規投稿",
-                new_post_path,
-                class: "btn btn-success btn-sm" %>
+                  new_post_path,
+                  class: "btn btn-success btn-sm" %>
           </div>
 
           <% if @posts.any? %>
             <ul class="list-group list-group-flush">
-<% @posts.each do |post| %>
-  <li class="list-group-item px-0 py-3">
-    <%= link_to post_path(post), class: "text-decoration-none text-reset" do %>
-      <p class="mb-1 fw-semibold">
-        <%= post.category.name %> / <%= number_to_currency(post.amount, unit: "¥") %>
-      </p>
-      <p class="mb-0 text-muted small">
-        <%= post.title %>
-      </p>
-    <% end %>
-  </li>
-<% end %>
+              <% @posts.each do |post| %>
+                <li class="list-group-item px-0 py-3">
+                  <%= link_to post_path(post), class: "text-decoration-none text-reset" do %>
+                    <p class="mb-1 fw-semibold">
+                      <%= post.category.name %> / <%= number_to_currency(post.amount, unit: "¥") %>
+                    </p>
+                    <p class="mb-0 text-muted small">
+                      <%= post.title %>
+                    </p>
+                  <% end %>
+                </li>
+              <% end %>
             </ul>
           <% else %>
-            <p class="text-muted mb-0">
-              まだ投稿がありません ✏️
-            </p>
+            <p class="text-muted mb-0">まだ投稿がありません ✏️</p>
           <% end %>
 
         </div>

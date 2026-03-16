@@ -1,12 +1,10 @@
 <div class="container py-5">
 
-  <!-- 戻る -->
   <div class="mb-4">
     <%= link_to "← 投稿詳細に戻る", post_path(@post),
           class: "text-decoration-none small text-muted" %>
   </div>
 
-  <!-- ヘッダー -->
   <div class="text-center mb-5">
     <h2 class="fw-bold mb-2">記録を整える</h2>
     <p class="text-muted small mb-0">
@@ -14,7 +12,6 @@
     </p>
   </div>
 
-  <!-- フォーム -->
   <div class="row justify-content-center">
     <div class="col-md-7 col-lg-6">
 
@@ -23,19 +20,16 @@
 
           <%= form_with model: @post, local: true do |f| %>
 
-            <!-- タイトル -->
             <div class="mb-4">
               <%= f.label :title, "何に使いましたか？", class: "form-label" %>
               <%= f.text_field :title, class: "form-control form-control-lg" %>
             </div>
 
-            <!-- 金額 -->
             <div class="mb-4">
               <%= f.label :amount, "金額", class: "form-label" %>
               <%= f.number_field :amount, class: "form-control" %>
             </div>
 
-            <!-- カテゴリ -->
             <div class="mb-4">
               <%= f.label :category_id, "カテゴリ", class: "form-label" %>
               <%= f.collection_select :category_id,
@@ -46,7 +40,6 @@
                     class: "form-select" %>
             </div>
 
-            <!-- メモ -->
             <div class="mb-5">
               <%= f.label :memo, "ひとことメモ", class: "form-label" %>
               <%= f.text_area :memo,
@@ -54,7 +47,6 @@
                     class: "form-control" %>
             </div>
 
-            <!-- 保存 -->
             <div class="d-grid mb-3">
               <%= f.submit "更新する",
                     class: "btn btn-success btn-lg rounded-3" %>
@@ -62,7 +54,6 @@
 
           <% end %>
 
-          <!-- 削除（控えめ） -->
           <div class="text-center mt-3">
             <%= link_to "この投稿を削除する",
                   post_path(@post),

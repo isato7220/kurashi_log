@@ -1,32 +1,23 @@
 <div class="container py-5 mx-auto">
 
-  <!-- 戻る -->
   <div class="mb-4">
     <%= link_to "← 一覧に戻る", posts_path,
           class: "text-decoration-none small text-muted" %>
   </div>
 
-  <!-- メインカード -->
   <div class="row justify-content-center">
     <div class="col-md-12 col-lg-11">
 
       <div class="card shadow-sm border-0 rounded-4">
-
         <div class="card-body p-4 p-md-5">
 
-          <!-- タイトル -->
           <div class="mb-4">
-
             <p class="text-muted small mb-2">
               <%= l @post.created_at, format: :long %>
             </p>
-
-            <!-- カテゴリバッジ -->
-<span class="badge bg-success-subtle text-success mb-2">
-  <%= @post.category&.name || "未分類" %>
-</span>
-
-
+            <span class="badge bg-success-subtle text-success mb-2">
+              <%= @post.category&.name || "未分類" %>
+            </span>
             <h3 class="fw-bold mb-0">
               <%= @post.title %>
             </h3>
@@ -34,7 +25,6 @@
 
           <hr>
 
-          <!-- 金額 -->
           <div class="mb-4">
             <p class="text-muted small mb-1">金額</p>
             <p class="fs-4 fw-semibold mb-0">
@@ -42,7 +32,6 @@
             </p>
           </div>
 
-          <!-- メモ -->
           <% if @post.memo.present? %>
             <div class="mb-4">
               <p class="text-muted small mb-1">メモ</p>
@@ -52,74 +41,52 @@
             </div>
           <% end %>
 
-          <!-- ボタン群 -->
           <div class="d-flex gap-3 mt-5">
-
             <%= link_to "編集する",
                   edit_post_path(@post),
                   class: "btn btn-success flex-fill" %>
-
             <%= link_to "削除する",
                   post_path(@post),
                   method: :delete,
                   data: { confirm: "削除しますか？" },
                   class: "btn btn-outline-secondary flex-fill" %>
-
           </div>
 
         </div>
       </div>
-<!-- ===================== -->
-<!-- 💬 コメントエリア追加 -->
-<!-- ===================== -->
 
-<div class="row justify-content-center mt-5">
-  <div class="col-md-12 col-lg-11">
+      <div class="card shadow-sm border-0 rounded-4 mt-5">
+        <div class="card-body p-4">
 
-    <div class="card shadow-sm border-0 rounded-4">
-      <div class="card-body p-4">
+          <h5 class="fw-bold mb-3">💬 コメント</h5>
 
-        <h5 class="fw-bold mb-3">💬 コメント</h5>
-
-        <!-- コメント一覧 -->
-        <% @post.comments.order(created_at: :desc).each do |comment| %>
-          <div class="bg-light rounded-3 p-3 mb-2 small">
-
-            <div class="text-muted mb-1">
-              <strong><%= comment.user.name %></strong>
-              ・ <%= l comment.created_at, format: :short %>
+          <% @post.comments.order(created_at: :desc).each do |comment| %>
+            <div class="bg-light rounded-3 p-3 mb-2 small">
+              <div class="text-muted mb-1">
+                <strong><%= comment.user.name %></strong>
+                ・ <%= l comment.created_at, format: :short %>
+              </div>
+              <div>
+                <%= simple_format(comment.body) %>
+              </div>
             </div>
+          <% end %>
 
-            <div>
-              <%= simple_format(comment.body) %>
+          <% if user_signed_in? %>
+            <div class="mt-3">
+              <%= form_with model: [@post, Comment.new], local: true do |f| %>
+                <%= f.text_area :body,
+                      rows: 2,
+                      placeholder: "ひとことコメント...",
+                      class: "form-control mb-2 rounded-3" %>
+                <%= f.submit "送信",
+                      class: "btn btn-success btn-sm px-4" %>
+              <% end %>
             </div>
+          <% end %>
 
-          </div>
-        <% end %>
-
-
-        <!-- フォーム -->
-        <% if user_signed_in? %>
-          <div class="mt-3">
-            <%= form_with model: [@post, Comment.new], local: true do |f| %>
-
-              <%= f.text_area :body,
-                    rows: 2,
-                    placeholder: "ひとことコメント...",
-                    class: "form-control mb-2 rounded-3" %>
-
-              <%= f.submit "送信",
-                    class: "btn btn-success btn-sm px-4" %>
-
-            <% end %>
-          </div>
-        <% end %>
-
+        </div>
       </div>
-    </div>
-
-  </div>
-</div>
 
     </div>
   </div>

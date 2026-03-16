@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   root to: "homes#top"
 
   get "mypage", to: "users#show"
-get  "profile/edit", to: "users#edit",   as: :edit_profile
-patch "profile",      to: "users#update", as: :profile
+  get  "profile/edit", to: "users#edit",   as: :edit_profile
+  patch "profile",      to: "users#update", as: :profile
 
 
   resources :posts do

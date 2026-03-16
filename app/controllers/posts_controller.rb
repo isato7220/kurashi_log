@@ -1,23 +1,21 @@
 class PostsController < ApplicationController
-
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
 
-def index
-  @posts = Post
-            .includes(:user, :category)
-            .order(created_at: :desc)
+  def index
+    @posts = Post
+               .includes(:user, :category)
+               .order(created_at: :desc)
 
-  if params[:q].present?
-    keyword = "%#{params[:q]}%"
+    if params[:q].present?
+      keyword = "%#{params[:q]}%"
 
-    @posts = @posts.joins(:category).where(
-      "posts.title LIKE :q OR posts.memo LIKE :q OR categories.name LIKE :q",
-      q: keyword
-    )
+      @posts = @posts.joins(:category).where(
+        "posts.title LIKE :q OR posts.memo LIKE :q OR categories.name LIKE :q",
+        q: keyword
+      )
+    end
   end
-end
-
 
   def new
     @post = Post.new
@@ -70,8 +68,6 @@ end
       :posted_on,
       :category_id,
       :memo
-
     )
   end
-
 end
