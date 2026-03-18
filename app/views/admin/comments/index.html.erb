@@ -1,0 +1,84 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">コメント管理</h2>
+    <span class="text-muted small"><%= Comment.count %>件</span>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body">
+      <%= form_with url: admin_comments_path, method: :get, local: true do |f| %>
+        <div class="row g-2 align-items-end">
+          <div class="col-md-5">
+            <%= f.text_field :q,
+                  value: params[:q],
+                  placeholder: "コメント本文で検索",
+                  class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= f.select :user_id,
+                  User.order(:name).map { |u| [u.name, u.id] },
+                  { include_blank: "ユーザーで絞り込み", selected: params[:user_id] },
+                  { class: "form-select" } %>
+          </div>
+          <div class="col-md-3">
+            <%= f.select :post_id,
+                  Post.order(:title).map { |p| [p.title, p.id] },
+                  { include_blank: "投稿で絞り込み", selected: params[:post_id] },
+                  { class: "form-select" } %>
+          </div>
+          <div class="col-md-1">
+            <%= f.submit "絞込", class: "btn btn-outline-secondary w-100" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-3">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>本文</th>
+            <th>投稿者</th>
+            <th>投稿</th>
+            <th>日時</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @comments.any? %>
+            <% @comments.each do |comment| %>
+              <tr>
+                <td><%= comment.body %></td>
+                <td class="small">
+                  <%= link_to comment.user.name,
+                        admin_user_path(comment.user),
+                        class: "text-decoration-none" %>
+                </td>
+                <td class="small">
+                  <%= link_to comment.post.title,
+                        post_path(comment.post),
+                        class: "text-decoration-none text-truncate d-inline-block",
+                        style: "max-width: 160px;" %>
+                </td>
+                <td class="text-muted small"><%= l comment.created_at, format: :short %></td>
+                <td class="text-end">
+                  <%= link_to "削除",
+                        admin_comment_path(comment),
+                        method: :delete,
+                        data: { confirm: "このコメントを削除しますか？" },
+                        class: "btn btn-sm btn-outline-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">コメントがありません</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

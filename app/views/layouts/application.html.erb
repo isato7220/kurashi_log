@@ -12,17 +12,15 @@
 
 <body>
 
-
-
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 
   <div class="container">
 
     <%= link_to "暮らしの棚卸し", root_path, class: "navbar-brand fw-bold" %>
-    <!-- ここ重要 -->
+
     <div class="collapse navbar-collapse" id="navbarMenu">
 
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ml-auto">
 
         <% if user_signed_in? %>
           <li class="nav-item">
@@ -31,13 +29,17 @@
           <li class="nav-item">
             <%= link_to "投稿一覧", posts_path, class: "nav-link" %>
           </li>
-                   <% if current_user.admin? %>
-            <li class="nav-item">
-              <%= link_to "カテゴリ管理",
-                    categories_path,
-                    class: "nav-link text-danger" %>
+          <% if current_user.admin? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-danger" href="#" id="adminMenu" role="button"
+                 data-toggle="dropdown" aria-expanded="false">管理</a>
+              <div class="dropdown-menu" aria-labelledby="adminMenu">
+                <%= link_to "ユーザー管理", admin_users_path, class: "dropdown-item" %>
+                <%= link_to "コメント管理", admin_comments_path, class: "dropdown-item" %>
+                <%= link_to "カテゴリ管理", categories_path, class: "dropdown-item" %>
+              </div>
             </li>
-            <% end %>
+          <% end %>
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_user_session_path, class: "nav-link", method: :delete %>
           </li>
@@ -50,24 +52,24 @@
       </ul>
 
     </div>
-        <li class="nav-item me-3">
-  <%= form_with url: posts_path,
-        method: :get,
-        local: true,
-        class: "d-flex" do |f| %>
 
-    <%= f.text_field :q,
-          value: params[:q],
-          placeholder: "タイトル・メモ・カテゴリ検索",
-          class: "form-control form-control-sm rounded-pill",
-          style: "width: 220px;" %>
-      <% end %>
-    </li>
+    <% if user_signed_in? %>
+      <div class="ml-2">
+        <%= form_with url: user_search_path,
+              method: :get,
+              local: true,
+              class: "d-flex" do |f| %>
+          <%= f.text_field :q,
+                value: params[:q],
+                placeholder: "ユーザー・投稿を検索",
+                class: "form-control form-control-sm rounded-pill",
+                style: "width: 200px;" %>
+        <% end %>
+      </div>
+    <% end %>
 
   </div>
 </nav>
-
-
 
   <%= yield %>
 

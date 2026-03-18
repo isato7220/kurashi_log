@@ -44,6 +44,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @query = params[:q].to_s.strip
+    if @query.present?
+      keyword = "%#{@query}%"
+      @users = User.where("name LIKE :q OR email LIKE :q", q: keyword).order(:name)
+      @posts = Post.includes(:user, :category)
+                   .joins(:user)
+                   .where("posts.title LIKE :q OR posts.memo LIKE :q OR users.name LIKE :q", q: keyword)
+                   .order(created_at: :desc)
+    else
+      @users = []
+      @posts = []
+    end
+  end
+
   private
 
   def user_params
